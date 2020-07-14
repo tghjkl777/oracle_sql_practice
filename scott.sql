@@ -133,6 +133,10 @@ select ename, deptno
 from emp natural join dept
 where loc='DALLAS';
 
+select ename, deptno 
+from emp
+where deptno in( select deptno from dept where loc='DALLAS');
+
 
 select ename, sal, deptno
 from emp
@@ -154,4 +158,52 @@ where sal > (select min(sal) from emp where deptno=30);
 
 
 SELECT * FROM emp WHERE sal IN(950, 3000, 1250);
+
+select ename, sal, deptno
+from emp outer
+where sal > (select avg(sal) from emp where deptno= outer.deptno);
+
+select deptno, empno, ename, sal
+from emp
+where(deptno, sal) In( select deptno,max(sal)
+from emp group by deptno);
+
+SELECT e.deptno , e.empno , e.ename , e.sal
+FROM emp e,(SELECT s.deptno , max(s.sal) msal
+FROM emp s GROUP BY deptno ) m
+WHERE e.deptno = m.deptno AND e.sal = m.msal;
+
+select * from emp;
+
+/*rowbnum 이 먼저 출련된다. 이렇게 하면안됨*/
+select rownum, ename, sal
+from emp
+where hiredate like '81%'
+order by sal desc;
+
+select rownum, ename, sal
+from (select * from emp where hiredate like '81%' order by sal desc)
+where rownum <4;
+
+select ename from emp
+union 
+select dname from dept;
+
+select sal, ename, rank() over (order by sal desc) as rank,
+DENSE_RANK() over (order by sal desc) as dense_rank, 
+ROW_NUMBER() over(order by sal desc) as row_numver,
+rownum as "rownum"
+from emp;
+
+select sal, ename, rank() over (order by sal desc) as rank,
+DENSE_RANK() over (order by sal desc) as dense_rank, 
+ROW_NUMBER() over(order by sal desc) as row_numver,
+rownum as "rownum"
+from emp
+order by ename;
+
+select deptno, job, sum(sal)
+from emp
+group by rollup (deptno, job);
+
 
