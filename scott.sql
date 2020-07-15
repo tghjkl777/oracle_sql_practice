@@ -206,4 +206,151 @@ select deptno, job, sum(sal)
 from emp
 group by rollup (deptno, job);
 
+select * from emp;
+select sal/12+1 from emp;
 
+select * 
+from emp, dept
+where emp.deptno(+) =dept.deptno;
+
+select *
+from emp right outer join dept using(deptno);
+
+select * 
+from emp, dept
+where emp.deptno =dept.deptno(+);
+
+select *
+from emp left outer join dept on(emp.deptno=dept.deptno);
+
+select empno,job,comm from emp;
+
+select sal 
+from emp
+where comm is null;
+
+SELECT sal*12 annual_salary FROM emp;
+
+select sysdate, user from dual;
+
+select distinct job from emp;
+
+SELECT deptno, job FROM emp;
+
+select DISTINCT deptno, job FROM emp
+order by deptno;
+
+SELECT DISTINCT job,deptno FROM emp
+order by deptno; 
+
+SELECT value FROM nls_session_parameters
+            WHERE parameter = 'NLS_DATE_FORMAT';
+            
+            
+select deptno, ename
+from emp
+where deptno <> all(30,40);
+
+
+select * from dept;
+SELECT dname, loc FROM dept WHERE dname LIKE '%AL%';
+
+select * from emp;
+
+select sal, round(sal,-1)
+from emp;
+
+SELECT ROUND(45.925), ROUND(45.925, 0), TRUNC(45.925), TRUNC(45.925, 0)
+            FROM dual;
+SELECT FLOOR(45.925), CEIL(45.925) FROM dual;
+
+SELECT SIN(3.141592/2) FROM dual;
+SELECT EXP(4) FROM dual;   
+
+
+SELECT LPAD('Oracle DBMS', 13, 'x'), RPAD('Oracle DBMS', 13, 'x') FROM dual;
+
+
+SELECT rPAD(ename, 15)||'   '||lPAD(job,20) FROM emp;
+
+
+select ename, ltrim(ename,'A')
+from emp;
+
+SELECT ename , LTRIM(ename, 'AB'), RTRIM(ename, 'SR') FROM emp;
+
+
+select rTRIM('##Database###','#') from dual;
+
+
+select * from emp;
+
+insert into dept(deptno, dname) values (80,'Brancj');
+insert into dept values (90,'hQs',null);
+select * 
+from dept
+where deptno in (80,90);
+
+delete from dept where deptno in(80,90);
+
+rollback;
+
+INSERT INTO emp (empno, ename, job, hiredate)	
+           VALUES (8000, 'PARK', 'ENGINEER', SYSDATE);
+           
+INSERT INTO emp (empno, ename, job, hiredate)
+           VALUES (8001, USER, 'TECH', TO_DATE('07/03/20', 'YY/MM/DD'));
+
+SELECT * FROM emp WHERE empno >= 8000;
+
+
+create table def_tab(
+    a number default 10,
+    b varchar2(10) default 'x',
+    c varchar2(10)
+    );
+
+drop table defs_tab;
+
+INSERT INTO def_tab VALUES (DEFAULT, DEFAULT,DEFAULT);
+
+select * from def_tab;
+
+INSERT INTO def_tab VALUES (DEFAULT, DEFAULT,'aaaaaa');
+
+INSERT INTO def_tab (c) VALUES ('bbbbbb');
+INSERT INTO def_tab (a, c) VALUES (20, 'cccccc');
+
+
+select count(*) from emp 
+where comm=300;
+
+select * from emp;
+
+update emp
+set comm =300;
+
+rollback;
+
+
+SELECT * FROM def_tab;
+UPDATE def_tab SET b ='y';
+
+SELECT TO_CHAR(HIREDATE, 'BC yyYY Q MM DD') FROM emp;
+
+SELECT TO_CHAR(sysdate, 'J') FROM dual;
+
+SELECT TO_CHAR(hiredate, 'QSPTH') FROM emp;
+SELECT TO_CHAR(TO_DATE('30/01/01','YY/MM/DD'),'YYYY') FROM dual ;
+
+SELECT * FROM emp JOIN dept ON emp.deptno = dept.deptno;
+
+select sysdate from dual;
+
+SELECT * FROM emp RIGHT OUTER JOIN dept ON emp.deptno = dept.deptno;
+
+SELECT TRANSLATE('Oracle DBMS','ABCD','1234') FROM dual;
+
+SELECT INSTR('Oracle DBMS', 'a') FROM dual;
+
+select sal||22+1 from emp;

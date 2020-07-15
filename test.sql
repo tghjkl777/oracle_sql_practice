@@ -1,9 +1,10 @@
-/*system*/
-/*create user scott identified by tiger;
-grant connect, resource to scott;
-*/
+create user testuser identified by testpw;
+grant connect,resource to testuser;
 
-/*연습용 계정 만들기*/
+select table_name
+from user_tables;
 
- create user testuser identified by testpw;
-grant connect, resource to testuser;
+SELECT DISTINCT object_type FROM  user_objects ;
+
+
+SELECT * FROM user_catalog ;

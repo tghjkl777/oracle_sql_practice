@@ -61,3 +61,43 @@ id    NUMBER(5) CONSTRAINT book_id_pk PRIMARY KEY,
     isbn    VARCHAR2(14) CONSTRAINT book_isbn_unique UNIQUE,
     pub_date DATE DEFAULT SYSDATE
 );
+
+CREATE TABLE job(
+    id    NUMBER(3) CONSTRAINT job_id_pk PRIMARY KEY,
+    name    VARCHAR(5) NOT NULL
+     );
+
+CREATE TABLE author (
+    id    NUMBER(5) CONSTRAINT author_id_pk PRIMARY KEY, 
+    name    VARCHAR2(20) CONSTRAINT author_name_not_null NOT NULL,
+    gender    CHAR(1) DEFAULT 'M',
+    age    NUMBER(2),
+    job_id    NUMBER(3),
+    CONSTRAINT author_gender_check CHECK (gender in ('M', 'F')),
+    CONSTRAINT author_job_id_fk FOREIGN KEY (job_id) REFERENCES job(id) 
+     );
+
+CREATE TABLE author_book (
+    author_id    NUMBER(5),
+    book_id        NUMBER(5),
+    author_order    NUMBER(2) DEFAULT 1,
+    CONSTRAINT authorbook_author_id_fk FOREIGN KEY (author_id) REFERENCES author(id) ON DELETE CASCADE,
+    CONSTRAINT authorbook_book_id_fk FOREIGN KEY (book_id) REFERENCES book(id) ON DELETE CASCADE,
+    CONSTRAINT authorbook_pk PRIMARY KEY (book_id, author_id, author_order)
+     );
+
+SELECT constraint_name, constraint_type,
+    search_condition
+    FROM user_constraints
+    WHERE table_name = 'BOOK';
+    
+    SELECT uc.constraint_name, uc.constraint_type, ucc.column_name, uc.search_condition
+    FROM user_constraints uc, user_cons_columns ucc
+    WHERE uc.constraint_name = ucc.constraint_name and uc.table_name = 'BOOK';
+
+
+
+INSERT INTO book VALUES (1, 'C++ INTRO', 20000, '15-222-22222', '07/01/02');
+ INSERT INTO book VALUES (2, 'JAVA PRIMER', 50000, '11-111-1111', DEFAULT);
+ SELECT * FROM book;
+
